@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9126DBCA-D353-4989-BE39-F0EE79346DE1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TACore</RootNamespace>
+    <AssemblyName>TACore</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Model\Backups\Backup.cs" />
+    <Compile Include="Model\Backups\BackupController.cs" />
+    <Compile Include="Model\Logging\LogController.cs" />
+    <Compile Include="Model\Logging\SyncLog.cs" />
+    <Compile Include="Model\Logging\SyncLogStep.cs" />
+    <Compile Include="Model\Sync Sources\DropboxSyncSource.cs" />
+    <Compile Include="Model\Sync Sources\FileSystemSyncSource.cs" />
+    <Compile Include="Model\Sync Sources\SyncSource.cs" />
+    <Compile Include="Model\WoW\SettingsFile.cs" />
+    <Compile Include="Model\WoW\WoWAccount.cs" />
+    <Compile Include="Model\WoW\WoWAddon.cs" />
+    <Compile Include="Model\WoW\WoWCharacter.cs" />
+    <Compile Include="Model\WoW\WoWInstall.cs" />
+    <Compile Include="Model\WoW\WoWRealm.cs" />
+    <Compile Include="Sync\SyncContainer.cs" />
+    <Compile Include="Sync\SyncOperation.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="..\KNFoundation\KNFoundation\KNPropertyListSerialization.cs">
+      <Link>KNFoundation\KNPropertyListSerialization.cs</Link>
+    </Compile>
+    <Compile Include="..\KNFoundation\KNFoundation\KNBundle.cs">
+      <Link>KNFoundation\KNBundle.cs</Link>
+    </Compile>
+    <Compile Include="..\KNFoundation\KNFoundation\KNStringExtensions.cs">
+      <Link>KNFoundation\KNStringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Helpers\DirectoryInfoExtensions.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\SUStandardVersionComparator.cs" />
+    <Compile Include="Helpers\SUVersionComparison.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Sync\" />
+    <Folder Include="KNFoundation\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DropNet\DropNet\DropNet.csproj">
+      <Project>{E9580EFC-6014-4D3B-82A8-5F6D57213CE4}</Project>
+      <Name>DropNet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Migration TODOs.txt" />
+  </ItemGroup>
+</Project>

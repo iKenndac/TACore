@@ -1,0 +1,6 @@
+[submodule "KNFoundation"]
+	path = KNFoundation
+	url = https://github.com/iKenndac/KNFoundation.git
+[submodule "DropNet"]
+	path = DropNet
+	url = https://github.com/dkarzon/DropNet.git
