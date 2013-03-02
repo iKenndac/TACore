@@ -222,7 +222,7 @@ namespace TACore {
 
             // Make sure WoW isn't running
 
-            if (Helpers.WoWIsOpen()) {
+            if (Platform.CurrentPlatform.WoWIsOpen) {
                 Source.UnlockSource();
                 throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("wow open during sync error title", ""));
             }
@@ -288,7 +288,7 @@ namespace TACore {
            
             // Make sure WoW isn't running
 
-            if (Helpers.WoWIsOpen()) {
+            if (Platform.CurrentPlatform.WoWIsOpen) {
                 Source.UnlockSource();
                 throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("wow open during sync error title", ""));
             }
@@ -330,7 +330,7 @@ namespace TACore {
 
             // Make sure WoW isn't running
 
-            if (Helpers.WoWIsOpen()) {
+            if (Platform.CurrentPlatform.WoWIsOpen) {
                 Source.UnlockSource();
                 throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("wow open during sync error title", ""));
             }

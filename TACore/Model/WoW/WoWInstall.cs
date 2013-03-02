@@ -9,7 +9,7 @@ namespace TACore {
     public class WoWInstall {
 
         public WoWInstall(string path) {
-            if (path.EndsWith("\\")) {
+            if (path.EndsWith(Path.DirectorySeparatorChar.ToString())) {
                 DirectoryPath = path.Substring(0, path.Length - 1);
             } else {
                 DirectoryPath = path;

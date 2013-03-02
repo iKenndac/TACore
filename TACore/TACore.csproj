@@ -31,6 +31,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -64,6 +67,9 @@
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\SUStandardVersionComparator.cs" />
     <Compile Include="Helpers\SUVersionComparison.cs" />
+    <Compile Include="Platforms\Platform.cs" />
+    <Compile Include="Platforms\WindowsPlatform.cs" />
+    <Compile Include="Platforms\MacPlatform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -71,6 +77,7 @@
     <Folder Include="Sync\" />
     <Folder Include="KNFoundation\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Platforms\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DropNet\DropNet\DropNet.csproj">
