@@ -6,7 +6,7 @@ using System.IO;
 using KNFoundation;
 
 namespace TACore {
-    class Backup {
+    public class Backup {
 
         public Backup(string path, string aDescription, DateTime aDate) {
             DateCreated = aDate;

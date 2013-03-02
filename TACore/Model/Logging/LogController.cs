@@ -6,7 +6,7 @@ using System.IO;
 using KNFoundation;
 
 namespace TACore {
-    class LogController {
+    public class LogController {
 
         private static LogController sharedInstance;
 
@@ -86,7 +86,7 @@ namespace TACore {
 
         private string LogsPath() {
 
-            string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			string appDataFolderPath = Platform.CurrentPlatform.ApplicationDataDirectory;
             string logsFolderPath = Path.Combine(appDataFolderPath, Constants.kApplicationSupportFolderName, Constants.kLogsFolderName);
 
             if (!Directory.Exists(logsFolderPath)) {

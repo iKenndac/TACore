@@ -9,7 +9,6 @@ namespace TACmd {
 		static ManualResetEvent reset = new ManualResetEvent(false);
 
 		public static void Main(string[] args) {
-			Console.WriteLine("Hello World!");
 
 			WoWInstall install = new WoWInstall(Platform.CurrentPlatform.WoWInstallationDirectory);
 				//("/Applications/World of Warcraft");
@@ -27,6 +26,7 @@ namespace TACmd {
 			};
 
 			container.SyncSucceeded += delegate(SyncContainer sender, SyncLog log) {
+				LogController.SharedInstance().AddLog(log);
 				Console.Out.WriteLine("Done!");
 				reset.Set();
 			};

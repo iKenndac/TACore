@@ -7,7 +7,7 @@ using System.ComponentModel;
 using KNFoundation;
 
 namespace TACore {
-    class BackupController : INotifyPropertyChanged {
+    public class BackupController : INotifyPropertyChanged {
 
         private static BackupController sharedInstance;
 
@@ -143,7 +143,7 @@ namespace TACore {
 
         private string BackupsPath() {
 
-            string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			string appDataFolderPath = Platform.CurrentPlatform.ApplicationDataDirectory;
             string backupsFolderPath = Path.Combine(appDataFolderPath, Constants.kApplicationSupportFolderName, Constants.kBackupsFolderName);
 
             if (!Directory.Exists(backupsFolderPath)) {
