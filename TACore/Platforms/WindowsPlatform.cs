@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Win32;
 
 namespace TACore {
@@ -37,6 +38,12 @@ namespace TACore {
 					}
 				} catch (Exception) { }
 				return false;
+			}
+		}
+
+		public override string ApplicationDataDirectory {
+			get {
+				return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			}
 		}
 

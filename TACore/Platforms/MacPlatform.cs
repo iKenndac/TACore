@@ -41,6 +41,13 @@ namespace TACore {
 			}
 		}
 
+		public override string ApplicationDataDirectory {
+			get {
+				string homeFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+				return Path.Combine(homeFolder, "Library", "Application Support");
+			}
+		}
+
 	}
 }
 

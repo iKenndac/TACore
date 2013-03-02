@@ -21,6 +21,7 @@ namespace TACore {
 
 		public abstract bool WoWIsOpen { get; }
 		public abstract string WoWInstallationDirectory { get; }
+		public abstract string ApplicationDataDirectory { get; }
 
 	}
 }
