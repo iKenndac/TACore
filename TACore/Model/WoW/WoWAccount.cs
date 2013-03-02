@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 
 namespace TeleportAddons {
-    class WoWAccount : ISettingsFileProvider {
+    public class WoWAccount : ISettingsFileProvider {
 
         public static List<WoWAccount> AccountsInInstall(WoWInstall install) {
 

@@ -6,7 +6,7 @@ using System.IO;
 using System.Security.Permissions;
 
 namespace TeleportAddons {
-    class WoWInstall {
+    public class WoWInstall {
 
         public WoWInstall(string path) {
             if (path.EndsWith("\\")) {

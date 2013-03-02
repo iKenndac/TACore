@@ -6,7 +6,7 @@ using System.IO;
 
 namespace TeleportAddons {
 
-    class WoWCharacter : ISettingsFileProvider {
+    public class WoWCharacter : ISettingsFileProvider {
 
         public static List<WoWCharacter> CharactersInRealm(WoWRealm realm) {
 

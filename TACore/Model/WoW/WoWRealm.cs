@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 
 namespace TeleportAddons {
-    class WoWRealm : ISettingsFileProvider {
+    public class WoWRealm : ISettingsFileProvider {
 
         public static List<WoWRealm> RealmsInAccount(WoWAccount account) {
 

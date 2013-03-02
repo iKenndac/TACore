@@ -9,7 +9,7 @@ using KNFoundation;
 
 namespace TeleportAddons {
 
-    interface ISettingsFileProvider {
+    public interface ISettingsFileProvider {
         
         string FullPathToFileContainer();
         List<SettingsFile> SettingsFiles { get; }
@@ -20,9 +20,9 @@ namespace TeleportAddons {
 
     }
 
-    class SettingsFile {
+    public class SettingsFile {
 
-        static List<string> fileNameFragmentExclusionList;
+		static List<string> fileNameFragmentExclusionList;
 
         private static List<string> FileNameFragmentExclusionList() {
 
@@ -36,7 +36,6 @@ namespace TeleportAddons {
                         ArrayList list = (ArrayList)plist[Constants.kSettingsFileNameExclusionFragmentListKey];
 
                         if (list != null) {
-
                             fileNameFragmentExclusionList = new List<string>((string[])list.ToArray(typeof(string)));
                         }
                     }
@@ -46,6 +45,8 @@ namespace TeleportAddons {
             }
             return fileNameFragmentExclusionList;
         }
+
+
 
 
         private static List<string> SettingsFileNamesInDirectory(string directoryPath) {
@@ -58,12 +59,14 @@ namespace TeleportAddons {
 
                     Boolean shouldBeIncluded = true;
 
-                    foreach (string fragment in FileNameFragmentExclusionList()) {
-                        if (file.Name.IndexOf(fragment, StringComparison.CurrentCultureIgnoreCase) > -1) {
-                            shouldBeIncluded = false;
-                            break;
-                        }
-                    }
+					if (FileNameFragmentExclusionList() != null) {
+                    	foreach (string fragment in FileNameFragmentExclusionList()) {
+                        	if (file.Name.IndexOf(fragment, StringComparison.CurrentCultureIgnoreCase) > -1) {
+								shouldBeIncluded = false;
+								break;
+							}
+						}
+					}
 
                     if (shouldBeIncluded) {
                         fileNames.Add(file.Name);

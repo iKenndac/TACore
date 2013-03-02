@@ -7,7 +7,7 @@ using System.IO;
 using KNFoundation;
 
 namespace TeleportAddons {
-    class WoWAddon {
+    public class WoWAddon {
 
         static List<string> addonFileNameFragmentExclusionList;
 
@@ -23,7 +23,6 @@ namespace TeleportAddons {
                         ArrayList list = (ArrayList)plist[Constants.kAddonsFileNameExclusionFragmentListKey];
 
                         if (list != null) {
-
                             addonFileNameFragmentExclusionList = new List<string>((string[])list.ToArray(typeof(string)));
                         }
                     }
@@ -46,30 +45,27 @@ namespace TeleportAddons {
 
             if (Directory.Exists(addonsFolder)) {
 
-                foreach (DirectoryInfo potentialAddon in (new DirectoryInfo(addonsFolder).GetDirectories())) {
+				foreach (DirectoryInfo potentialAddon in (new DirectoryInfo(addonsFolder).GetDirectories())) {
 
-                    if (!potentialAddon.Name.Equals(Constants.kSavedVariablesFolderName, StringComparison.CurrentCultureIgnoreCase)) {
+					bool shouldBeIncluded = true;
 
-                        bool shouldBeIncluded = true;
+					if (FileNameFragmentExclusionList() != null) {
+						foreach (string fragment in FileNameFragmentExclusionList()) {
+							if (potentialAddon.Name.IndexOf(fragment, StringComparison.CurrentCultureIgnoreCase) > -1) {
+								shouldBeIncluded = false;
+								break;
+							}
+						}
+					}
 
-                        if (FileNameFragmentExclusionList() != null) {
-                            foreach (string fragment in FileNameFragmentExclusionList()) {
-                                if (potentialAddon.Name.IndexOf(fragment, StringComparison.CurrentCultureIgnoreCase) > -1) {
-                                    shouldBeIncluded = false;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (shouldBeIncluded) {
-                            WoWAddon addon = new WoWAddon(install, potentialAddon.Name);
-                            if (addon.ValidAddon) {
-                                addons.Add(addon);
-                            }
-                        }
-                    }
-                }
-            }
+					if (shouldBeIncluded) {
+						WoWAddon addon = new WoWAddon(install, potentialAddon.Name);
+						if (addon.ValidAddon) {
+							addons.Add(addon);
+						}
+					}
+				}
+			}
 
             return addons;
         }
