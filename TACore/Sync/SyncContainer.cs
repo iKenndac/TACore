@@ -9,16 +9,18 @@ using KNFoundation;
 
 namespace TACore {
 
-    interface SyncContainerDelegate {
+	public delegate void SyncBasicEventHandler(SyncContainer sender);
+	public delegate void SyncWithLogEventHandler(SyncContainer sender, SyncLog log);
+	public delegate void SyncWithExeptionEventHandler(SyncContainer sender, Exception exeption);
 
-        void SyncWillStart(SyncContainer aSyncContainer);
-        void SyncDidFailOutsideOfSyncWithException(SyncContainer aSyncContainer, Exception exception);
-        void SyncDidFailWithLog(SyncContainer aSyncContainer, SyncLog aLog);
-        void SyncDidSucceedWithLog(SyncContainer aSyncContainer, SyncLog aLog);
-        void SyncDidCancel(SyncContainer aSyncContainer);
-    }
+    public class SyncContainer : INotifyPropertyChanged {
 
-    class SyncContainer {
+		public event SyncBasicEventHandler SyncStarting;
+		public event SyncBasicEventHandler SyncCancelled;
+		public event SyncWithLogEventHandler SyncSucceeded;
+		public event SyncWithExeptionEventHandler SyncSetupFailed;
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
         BackgroundWorker syncOperationWorker;
 
@@ -35,11 +37,11 @@ namespace TACore {
             }
 
             if (!IsSyncing && Source != null && Target != null) {
-                if (Delegate != null) {
-                    Delegate.SyncWillStart(this);
-                }
 
-				// MIGRATION: This used to will/didChangeValueForKey on CanCancel
+				IsSyncing = true;
+				if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("IsSyncing"));
+
+				if (SyncStarting != null) SyncStarting.Invoke(this);
 
                 syncOperationWorker = new BackgroundWorker();
                 syncOperationWorker.WorkerSupportsCancellation = true;
@@ -49,40 +51,30 @@ namespace TACore {
 
                 syncOperationWorker.RunWorkerAsync();
 
-				// ---- didChange here
+				if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("CanCancel"));
             }
         }
 
         public void Cancel() {
-			// MIGRATION: This used to will/didChangeValueForKey on CanCancel
+
 			if (syncOperationWorker != null && syncOperationWorker.WorkerSupportsCancellation) {
                 syncOperationWorker.CancelAsync();
             }
-			// ---- didChange here
+
+			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("CanCancel"));
        	}
 
-        public Boolean CanCancel() {
-            return (syncOperationWorker != null && syncOperationWorker.WorkerSupportsCancellation && (!syncOperationWorker.CancellationPending));
-        }
-
         private void FailWithException(Exception ex) {
-            if (Delegate != null) {
-                Delegate.SyncDidFailOutsideOfSyncWithException(this, ex);
-            }
+			if (SyncSetupFailed != null) SyncSetupFailed.Invoke(this, ex);
         }
 
         private void SucceedWithLog(SyncLog log) {
-            if (Delegate != null) {
-                Delegate.SyncDidSucceedWithLog(this, log);
-            }
+			if (SyncSucceeded != null) SyncSucceeded.Invoke(this, log);
         }
 
-        private void InformDelegateOfCancellation() {
-            if (Delegate != null) {
-                Delegate.SyncDidCancel(this);
-            }
+        private void FailWithCancellation() {
+			if (SyncCancelled != null) SyncCancelled.Invoke(this);
         }
-
 
         private void DoSync(object sender, DoWorkEventArgs e) {
 
@@ -282,9 +274,8 @@ namespace TACore {
 
             // Can't cancel any more!
 
-			// MIGRATION: This used to will/didChangeValueForKey on CanCancel
             backgroundWorker.WorkerSupportsCancellation = false;
-			// -- didChange here
+			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("CanCancel"));
            
             // Make sure WoW isn't running
 
@@ -371,7 +362,7 @@ namespace TACore {
         private void SyncCompleted(object sender, RunWorkerCompletedEventArgs e) {
 
             if (e.Cancelled) {
-                InformDelegateOfCancellation();
+                FailWithCancellation();
             } else if (e.Error != null) {
                 FailWithException(e.Error);
             } else {
@@ -380,17 +371,23 @@ namespace TACore {
             }
 
             IsSyncing = false;
+			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("IsSyncing"));
         }
 
         #region Properties
 
-        public SyncContainerDelegate Delegate { get; set; }
         public Boolean ResetFromSyncSource { get; set; }
         public Boolean ResetFromTargetInstall { get; set; }
 
-        private SyncSource Source { get; set; }
-        private WoWInstall Target { get; set; }
-        private Boolean IsSyncing { get; set; }
+        public SyncSource Source { get; private set; }
+        public WoWInstall Target { get; private set; }
+        public Boolean IsSyncing { get; private set; }
+
+		public Boolean CanCancel {
+			get { 
+				return (syncOperationWorker != null && syncOperationWorker.WorkerSupportsCancellation && (!syncOperationWorker.CancellationPending));
+			}
+		}
 
         #endregion
 

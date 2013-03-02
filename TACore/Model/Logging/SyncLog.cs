@@ -7,7 +7,7 @@ using KNFoundation;
 
 namespace TACore {
 
-    class SyncLog {
+    public class SyncLog {
 
         public enum SyncResult : int {
             kNothingChanged = 0,

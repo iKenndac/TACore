@@ -6,7 +6,7 @@ using System.Text;
 using KNFoundation;
 
 namespace TACore {
-    class SyncLogStep {
+    public class SyncLogStep {
 
         public enum SyncLogStepStatus : int {
             kStepStatusFailed = 0,

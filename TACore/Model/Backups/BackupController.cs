@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.ComponentModel;
 using KNFoundation;
 
 namespace TACore {
-    class BackupController {
+    class BackupController : INotifyPropertyChanged {
 
         private static BackupController sharedInstance;
 
@@ -16,6 +17,8 @@ namespace TACore {
             }
             return sharedInstance;
         }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
         private BackupController() {
 
@@ -62,8 +65,6 @@ namespace TACore {
 
         public Backup AddBackupByBackingUpInstallWithDescription(WoWInstall install, string backupDescription) {
 
-            // MIGRATION: This used to will/didChangeValueForKey on Backups
-
             DateTime now = DateTime.Now;
             string backupFilePath = PathForNewBackupWithDescriptionAtDate(backupDescription, now);
 
@@ -82,7 +83,7 @@ namespace TACore {
                 return backup1.DateCreated.CompareTo(backup2.DateCreated) * -1;
             });
 
-			// -- DidChange was here
+			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Backups"));
 
             return backup;
         }
@@ -111,7 +112,8 @@ namespace TACore {
 
                 Backups.Remove(backup);
 
-				// -- didChange was here
+				if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Backups"));
+
             }
         }
 

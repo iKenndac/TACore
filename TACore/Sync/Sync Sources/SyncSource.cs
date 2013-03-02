@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace TACore {
-    interface SyncSource {
+    public interface SyncSource {
 
         void SetupWithPlistRepresentation(Dictionary<string, object> plistRep);
         Dictionary<string, object> PlistRepresentation();
