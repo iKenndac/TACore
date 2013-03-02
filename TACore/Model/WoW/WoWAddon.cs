@@ -20,9 +20,9 @@ namespace TACore {
                 try {
                     if (File.Exists(listPath)) {
                         Dictionary<string, object> plist = KNPropertyListSerialization.PropertyListWithData(File.ReadAllBytes(listPath));
-                        ArrayList list = (ArrayList)plist[Constants.kAddonsFileNameExclusionFragmentListKey];
-
-                        if (list != null) {
+                        
+						if (plist.ContainsKey(Constants.kAddonsFileNameExclusionFragmentListKey)) {
+							ArrayList list = (ArrayList)plist[Constants.kAddonsFileNameExclusionFragmentListKey];
                             addonFileNameFragmentExclusionList = new List<string>((string[])list.ToArray(typeof(string)));
                         }
                     }
@@ -138,10 +138,14 @@ namespace TACore {
                     byte[] plistData = File.ReadAllBytes(sidecarPath);
                     Dictionary<string, object> sideCarAttributes = KNPropertyListSerialization.PropertyListWithData(plistData);
 
-                    if (sideCarAttributes[Constants.kSideCarChecksumKey].Equals(Checksum)) {
-
-                        NormalisedUTCDateCreated = (DateTime)sideCarAttributes[Constants.kSideCarDateCreatedUTCKey];
-                        NormalisedUTCDateModified = (DateTime)sideCarAttributes[Constants.kSideCarDateModifiedUTCKey];
+                    if (sideCarAttributes.ContainsKey(Constants.kSideCarChecksumKey) &&
+					    ((string)sideCarAttributes[Constants.kSideCarChecksumKey]).Equals(Checksum, StringComparison.CurrentCultureIgnoreCase)) {
+                    
+						if (sideCarAttributes.ContainsKey(Constants.kSideCarDateCreatedUTCKey))
+                        	NormalisedUTCDateCreated = (DateTime)sideCarAttributes[Constants.kSideCarDateCreatedUTCKey];
+                        
+						if (sideCarAttributes.ContainsKey(Constants.kSideCarDateModifiedUTCKey))
+							NormalisedUTCDateModified = (DateTime)sideCarAttributes[Constants.kSideCarDateModifiedUTCKey];
 
                         // Directory and TOC
 

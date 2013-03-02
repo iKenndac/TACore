@@ -25,18 +25,26 @@ namespace TACore {
 
             if (plistRepresentation != null) {
 
-                StartDate = (DateTime)plistRepresentation[Constants.kLogPlistStartDateKey];
-                EndDate = (DateTime)plistRepresentation[Constants.kLogPlistEndDateKey];
-                WasTestRun = (Boolean)plistRepresentation[Constants.kLogPlistWasTestRunKey];
-                Result = (SyncResult)plistRepresentation[Constants.kLogPlistResultKey];
+				if (plistRepresentation.ContainsKey(Constants.kLogPlistStartDateKey))
+                	StartDate = (DateTime)plistRepresentation[Constants.kLogPlistStartDateKey];
+
+				if (plistRepresentation.ContainsKey(Constants.kLogPlistEndDateKey))
+					EndDate = (DateTime)plistRepresentation[Constants.kLogPlistEndDateKey];
+
+				if (plistRepresentation.ContainsKey(Constants.kLogPlistWasTestRunKey))
+               		WasTestRun = (Boolean)plistRepresentation[Constants.kLogPlistWasTestRunKey];
+
+				if (plistRepresentation.ContainsKey(Constants.kLogPlistResultKey))
+                	Result = (SyncResult)plistRepresentation[Constants.kLogPlistResultKey];
+
+				if (!plistRepresentation.ContainsKey(Constants.kLogPlistStepsKey))
+					return;
 
                 ArrayList stepRepresentations = (ArrayList)plistRepresentation[Constants.kLogPlistStepsKey];
                 
                 if (stepRepresentations != null && (stepRepresentations.Count > 0)) {
-
-                    foreach (Dictionary<string, object> stepRep in stepRepresentations) {
+                    foreach (Dictionary<string, object> stepRep in stepRepresentations)
                         Steps.Add(new SyncLogStep(stepRep));
-                    }
                 }
             }
         }

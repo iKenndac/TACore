@@ -23,16 +23,21 @@ namespace TACore {
             Children = new List<SyncLogStep>();
 
             if (plistRepresentation != null) {
-                StepDescription = (string)plistRepresentation[Constants.kLogStepPlistDescriptionKey];
-                Status = (SyncLogStepStatus)plistRepresentation[Constants.kLogStepPlistStatusKey];
+
+				if (plistRepresentation.ContainsKey(Constants.kLogStepPlistDescriptionKey))
+                	StepDescription = (string)plistRepresentation[Constants.kLogStepPlistDescriptionKey];
+                
+				if (plistRepresentation.ContainsKey(Constants.kLogStepPlistStatusKey))
+					Status = (SyncLogStepStatus)plistRepresentation[Constants.kLogStepPlistStatusKey];
+
+				if (!plistRepresentation.ContainsKey(Constants.kLogStepPlistChildrenKey))
+					return;
 
                 ArrayList childReps = (ArrayList)plistRepresentation[Constants.kLogStepPlistChildrenKey];
 
                 if (childReps != null && (childReps.Count > 0)) {
-
-                    foreach (Dictionary<string, object> rep in childReps) {
+                    foreach (Dictionary<string, object> rep in childReps)
                         Children.Add(new SyncLogStep(rep));
-                    }
                 }
             }
         }

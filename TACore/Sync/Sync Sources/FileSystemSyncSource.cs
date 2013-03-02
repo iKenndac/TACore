@@ -215,7 +215,7 @@ namespace TACore {
 
                 if (data != null) {
                     Dictionary<string, object> plist = KNPropertyListSerialization.PropertyListWithData(data);
-                    if (plist != null) {
+					if (plist != null && plist.ContainsKey(Constants.kSideCarSyncSourceSyncIdKey)) {
                         return (string)plist[Constants.kSideCarSyncSourceSyncIdKey];
                     }
                 }
@@ -236,7 +236,7 @@ namespace TACore {
 
                 if (data != null) {
                     Dictionary<string, object> plist = KNPropertyListSerialization.PropertyListWithData(data);
-                    if (plist != null) {
+					if (plist != null && plist.ContainsKey(Constants.kSideCarChecksumKey)) {
                         return (string)plist[Constants.kSideCarChecksumKey];
                     }
                 }

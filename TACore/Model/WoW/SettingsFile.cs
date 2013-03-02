@@ -33,10 +33,10 @@ namespace TACore {
                 try {
                     if (File.Exists(listPath)) {
                         Dictionary<string, object> plist = KNPropertyListSerialization.PropertyListWithData(File.ReadAllBytes(listPath));
-                        ArrayList list = (ArrayList)plist[Constants.kSettingsFileNameExclusionFragmentListKey];
-
-                        if (list != null) {
-                            fileNameFragmentExclusionList = new List<string>((string[])list.ToArray(typeof(string)));
+                        
+						if (plist.ContainsKey(Constants.kSettingsFileNameExclusionFragmentListKey)) {
+							ArrayList list = (ArrayList)plist[Constants.kSettingsFileNameExclusionFragmentListKey];
+							fileNameFragmentExclusionList = new List<string>((string[])list.ToArray(typeof(string)));
                         }
                     }
 
@@ -127,10 +127,14 @@ namespace TACore {
                 try {
                     Dictionary<string, object> sideCarAttributes = KNPropertyListSerialization.PropertyListWithData(File.ReadAllBytes(sideCarPath));
 
-                    if (((string)sideCarAttributes[Constants.kSideCarChecksumKey]).Equals(Checksum, StringComparison.CurrentCultureIgnoreCase)) {
+					if (sideCarAttributes.ContainsKey(Constants.kSideCarChecksumKey) &&
+					    ((string)sideCarAttributes[Constants.kSideCarChecksumKey]).Equals(Checksum, StringComparison.CurrentCultureIgnoreCase)) {
                     
-                        NormalisedUTCDateCreated = (DateTime)sideCarAttributes[Constants.kSideCarDateCreatedUTCKey];
-                        NormalisedUTCDateModified = (DateTime)sideCarAttributes[Constants.kSideCarDateModifiedUTCKey];
+						if (sideCarAttributes.ContainsKey(Constants.kSideCarDateCreatedUTCKey))
+                        	NormalisedUTCDateCreated = (DateTime)sideCarAttributes[Constants.kSideCarDateCreatedUTCKey];
+                        
+						if (sideCarAttributes.ContainsKey(Constants.kSideCarDateModifiedUTCKey))
+							NormalisedUTCDateModified = (DateTime)sideCarAttributes[Constants.kSideCarDateModifiedUTCKey];
 
                         if (File.Exists(FullPath())) {
                             File.SetCreationTimeUtc(FullPath(), NormalisedUTCDateCreated);

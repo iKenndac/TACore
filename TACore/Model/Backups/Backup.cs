@@ -32,10 +32,11 @@ namespace TACore {
         }
 
         public Backup(Dictionary<string, object> plistRepresentation, string backupFilePath) {
-            DateCreated = (DateTime)plistRepresentation[Constants.kBackupPlistDateCreatedKey];
-            BackupDescription = (string)plistRepresentation[Constants.kBackupPlistDescriptionKey];
+			if (plistRepresentation.ContainsKey(Constants.kBackupPlistDateCreatedKey))
+			    DateCreated = (DateTime)plistRepresentation[Constants.kBackupPlistDateCreatedKey];
+			if (plistRepresentation.ContainsKey(Constants.kBackupPlistDescriptionKey))
+           		BackupDescription = (string)plistRepresentation[Constants.kBackupPlistDescriptionKey];
             FullPathToBackupFile = backupFilePath;
-
         }
 
         public Dictionary<string, object> PlistRepresentation() {

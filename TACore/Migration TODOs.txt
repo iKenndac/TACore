@@ -1,6 +1,3 @@
-
-- Getting values from KNPropertyListSerialization files or initWithPlist methods don't check if a key exists first
-
 - BackupController has an expiry time of 30 days
 
 - DropBox UploadFile calls aren't error checked (DropboxSyncSource)
