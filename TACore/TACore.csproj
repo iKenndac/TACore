@@ -77,6 +77,10 @@
       <Project>{E9580EFC-6014-4D3B-82A8-5F6D57213CE4}</Project>
       <Name>DropNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharpZipLib\src\ICSharpCode.SharpZLib.csproj">
+      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
+      <Name>ICSharpCode.SharpZLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Migration TODOs.txt" />

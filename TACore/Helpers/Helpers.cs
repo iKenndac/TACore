@@ -3,41 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Microsoft.Win32;
 using KNFoundation;
-using System.Diagnostics;
+using ICSharpCode.SharpZipLib.Zip;
 
-namespace TeleportAddons {
-    class Helpers {
-
-        public static Boolean WoWIsOpen() {
-            try {
-                Process[] processes = Process.GetProcessesByName("wow");
-                if (processes != null && processes.Length > 0) {
-                    return true;
-                }
-            } catch (Exception) { }
-            return false;
-        }
-
-        public static string WorldOfWarcraftInstallationDirectory() {
-
-            try {
-                RegistryKey InstallPath = Registry.LocalMachine;
-
-                if (Environment.Is64BitOperatingSystem && Environment.Is64BitProcess) {
-                    InstallPath = InstallPath.OpenSubKey(@"SOFTWARE\Wow6432Node\Blizzard Entertainment\World of Warcraft");
-                } else {
-                    InstallPath = InstallPath.OpenSubKey(@"SOFTWARE\Blizzard Entertainment\World of Warcraft");
-                }
-
-                return (string)InstallPath.GetValue("InstallPath");
-
-            } catch (Exception) {
-            }
-
-            return null;
-        }
+namespace TACore {
+    public class Helpers {
 
         public static string PathByAppendingUniqueFileNameFromFileNameInPath(string suggestedFileName, string directoryPath) {
 
@@ -87,10 +57,6 @@ namespace TeleportAddons {
 
         public static void ExtractZipFileInStreamToDirectory(Stream stream, string directoryPath) {
 
-			throw new NotImplementedException();
-
-			/*
-
             using (ZipInputStream s = new ZipInputStream(stream)) {
 
                 ZipEntry theEntry;
@@ -123,16 +89,9 @@ namespace TeleportAddons {
                     }
                 }
             }
-
-*/
-
         }
 
         public static void ArchiveInstallToZipFileAtDirectoryForBackup(WoWInstall install, string zipFilePath) {
-
-			throw new NotImplementedException();
-
-			/*
 
             List<string> foldersToZip = new List<string>();
 
@@ -165,11 +124,9 @@ namespace TeleportAddons {
 
             // Close is important to wrap things up and unlock the file.
             s.Close();
-
-		*/
         }
 
-		/*
+
         private static void AddFolderAtPathToZipStream(string folder, string zipRoot, ZipOutputStream stream) {
 
             DirectoryInfo dirInfo = new DirectoryInfo(folder);
@@ -203,10 +160,6 @@ namespace TeleportAddons {
 
             }
 
-
         }
-
-*/
-
     }
 }

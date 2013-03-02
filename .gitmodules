@@ -4,3 +4,6 @@
 [submodule "DropNet"]
 	path = DropNet
 	url = https://github.com/dkarzon/DropNet.git
+[submodule "SharpZipLib"]
+	path = SharpZipLib
+	url = https://github.com/icsharpcode/SharpZipLib.git
