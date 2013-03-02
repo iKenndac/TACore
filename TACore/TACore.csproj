@@ -42,9 +42,6 @@
     <Compile Include="Model\Logging\LogController.cs" />
     <Compile Include="Model\Logging\SyncLog.cs" />
     <Compile Include="Model\Logging\SyncLogStep.cs" />
-    <Compile Include="Model\Sync Sources\DropboxSyncSource.cs" />
-    <Compile Include="Model\Sync Sources\FileSystemSyncSource.cs" />
-    <Compile Include="Model\Sync Sources\SyncSource.cs" />
     <Compile Include="Model\WoW\SettingsFile.cs" />
     <Compile Include="Model\WoW\WoWAccount.cs" />
     <Compile Include="Model\WoW\WoWAddon.cs" />
@@ -70,6 +67,9 @@
     <Compile Include="Platforms\Platform.cs" />
     <Compile Include="Platforms\WindowsPlatform.cs" />
     <Compile Include="Platforms\MacPlatform.cs" />
+    <Compile Include="Sync\Sync Sources\DropboxSyncSource.cs" />
+    <Compile Include="Sync\Sync Sources\FileSystemSyncSource.cs" />
+    <Compile Include="Sync\Sync Sources\SyncSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
