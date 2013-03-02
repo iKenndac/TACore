@@ -5,12 +5,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TACore", "TACore\TACore.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropNet", "DropNet\DropNet\DropNet.csproj", "{E9580EFC-6014-4D3B-82A8-5F6D57213CE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TACmd", "TACmd\TACmd.csproj", "{4416D1B2-1AE1-4B9B-A65A-E56D10F89F62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4416D1B2-1AE1-4B9B-A65A-E56D10F89F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4416D1B2-1AE1-4B9B-A65A-E56D10F89F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4416D1B2-1AE1-4B9B-A65A-E56D10F89F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4416D1B2-1AE1-4B9B-A65A-E56D10F89F62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9126DBCA-D353-4989-BE39-F0EE79346DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9126DBCA-D353-4989-BE39-F0EE79346DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9126DBCA-D353-4989-BE39-F0EE79346DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -21,6 +27,6 @@ Global
 		{E9580EFC-6014-4D3B-82A8-5F6D57213CE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = TACore\TACore.csproj
+		StartupItem = TACmd\TACmd.csproj
 	EndGlobalSection
 EndGlobal
