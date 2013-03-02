@@ -6,7 +6,7 @@ using KNFoundation;
 using System.IO;
 
 namespace TACore {
-    class FileSystemSyncSource : SyncSource {
+    public class FileSystemSyncSource : SyncSource {
 
         public FileSystemSyncSource() { }
 

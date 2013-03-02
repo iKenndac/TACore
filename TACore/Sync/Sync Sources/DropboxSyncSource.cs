@@ -8,7 +8,7 @@ using DropNet;
 using DropNet.Models;
 
 namespace TACore {
-    class DropboxSyncSource : SyncSource {
+    public class DropboxSyncSource : SyncSource {
 
         public static string kConsumerKey = "o21wcwkodah76by";
         public static string kConsumerSecret = "8w2vcnqxa9lq2sx";

@@ -82,7 +82,7 @@ namespace TACore {
                 }
             }
 
-        } 
+        }
 
         private string LogsPath() {
 

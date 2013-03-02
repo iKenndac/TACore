@@ -11,14 +11,14 @@ namespace TACore {
 
 	public delegate void SyncBasicEventHandler(SyncContainer sender);
 	public delegate void SyncWithLogEventHandler(SyncContainer sender, SyncLog log);
-	public delegate void SyncWithExeptionEventHandler(SyncContainer sender, Exception exeption);
+	public delegate void SyncWithExeptionEventHandler(SyncContainer sender, Exception exception);
 
     public class SyncContainer : INotifyPropertyChanged {
 
 		public event SyncBasicEventHandler SyncStarting;
 		public event SyncBasicEventHandler SyncCancelled;
 		public event SyncWithLogEventHandler SyncSucceeded;
-		public event SyncWithExeptionEventHandler SyncSetupFailed;
+		public event SyncWithExeptionEventHandler SyncFailed;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,7 +65,7 @@ namespace TACore {
        	}
 
         private void FailWithException(Exception ex) {
-			if (SyncSetupFailed != null) SyncSetupFailed.Invoke(this, ex);
+			if (SyncFailed != null) SyncFailed.Invoke(this, ex);
         }
 
         private void SucceedWithLog(SyncLog log) {
@@ -134,7 +134,7 @@ namespace TACore {
                 syncId = Guid.NewGuid().ToString();
             }
 
-            string cachedSyncLocation = Path.Combine(Path.GetTempPath(), KNBundle.MainBundle().BundleIdentifier, syncId);
+			string cachedSyncLocation = Path.Combine(Path.GetTempPath(), Constants.kTeleportAddonsIdentifier, syncId);
 
             Boolean didUseCachedSyncStore = false;
 
@@ -302,7 +302,7 @@ namespace TACore {
 
                 cachedSyncLocation = Path.Combine(
                     Path.GetTempPath(),
-                    KNBundle.MainBundle().BundleIdentifier,
+					Constants.kTeleportAddonsIdentifier,
                     newSyncId
                     );
             }

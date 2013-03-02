@@ -59,7 +59,7 @@ namespace TACore {
         // General 
 
         public const string kWorldOfWarcraftApplicationIdentifier = "com.blizzard.worldofwarcraft";
-        public const string kTeleportAddonsErrorDomain = "com.kennettnet.TeleportAddons";
+        public const string kTeleportAddonsErrorDomain = "org.danielkennett.TeleportAddons";
         public const string kSyncSourceUserDefaultsKey = "SyncSource";
         public const string kSyncSourceDataUserDefaultsKey = "SyncSourceData";
         public const string kTargetInstallPathUserDefaultsKey = "TargetInstallPath";
@@ -70,6 +70,7 @@ namespace TACore {
         public const string kExceptionErrorCodeKey = "kExceptionErrorCodeKey";
         public const string kHideWindowAtStartupArgument = "/HideWindowAtStartup";
         public const string kSkipInitialAutosyncArgument = "/SkipInitialAutosync";
+		public const string kTeleportAddonsIdentifier = "org.danielkennett.TeleportAddons";
 
         // Sidecars
 
