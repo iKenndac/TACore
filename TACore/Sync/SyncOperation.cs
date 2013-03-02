@@ -6,7 +6,7 @@ using System.IO;
 using KNFoundation;
 using SparkleDotNET;
 
-namespace TeleportAddons {
+namespace TACore {
     class SyncOperation {
 
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using KNFoundation;
 
-namespace TeleportAddons {
+namespace TACore {
     class SyncLogStep {
 
         public enum SyncLogStepStatus : int {

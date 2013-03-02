@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using KNFoundation;
 
-namespace TeleportAddons {
+namespace TACore {
 
     interface SyncContainerDelegate {
 

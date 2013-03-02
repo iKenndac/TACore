@@ -1,5 +1,5 @@
 using System;
-using TeleportAddons;
+using TACore;
 
 namespace TACmd {
 	class MainClass {

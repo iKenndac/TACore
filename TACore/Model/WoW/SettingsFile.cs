@@ -7,7 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using KNFoundation;
 
-namespace TeleportAddons {
+namespace TACore {
 
     public interface ISettingsFileProvider {
         

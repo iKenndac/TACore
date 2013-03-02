@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TeleportAddons {
+namespace TACore {
     interface SyncSource {
 
         void SetupWithPlistRepresentation(Dictionary<string, object> plistRep);

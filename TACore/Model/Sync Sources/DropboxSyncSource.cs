@@ -7,7 +7,7 @@ using System.IO;
 using DropNet;
 using DropNet.Models;
 
-namespace TeleportAddons {
+namespace TACore {
     class DropboxSyncSource : SyncSource {
 
         public static string kConsumerKey = "o21wcwkodah76by";

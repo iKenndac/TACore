@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using KNFoundation;
 
-namespace TeleportAddons {
+namespace TACore {
     class BackupController {
 
         private static BackupController sharedInstance;

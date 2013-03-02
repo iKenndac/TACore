@@ -5,7 +5,7 @@ using System.Text;
 using KNFoundation;
 using System.IO;
 
-namespace TeleportAddons {
+namespace TACore {
     class FileSystemSyncSource : SyncSource {
 
         public FileSystemSyncSource() { }

@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Security.Permissions;
 
-namespace TeleportAddons {
+namespace TACore {
     public class WoWInstall {
 
         public WoWInstall(string path) {

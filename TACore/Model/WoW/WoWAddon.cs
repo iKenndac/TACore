@@ -6,7 +6,7 @@ using System.Text;
 using System.IO;
 using KNFoundation;
 
-namespace TeleportAddons {
+namespace TACore {
     public class WoWAddon {
 
         static List<string> addonFileNameFragmentExclusionList;
