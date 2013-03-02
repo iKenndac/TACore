@@ -13,6 +13,25 @@ namespace TACore {
 	public delegate void SyncWithLogEventHandler(SyncContainer sender, SyncLog log);
 	public delegate void SyncWithExeptionEventHandler(SyncContainer sender, Exception exception);
 
+	public enum SyncFailureReason : int {
+		InvalidResetConfiguration,
+		TargetCannotBeReset,
+		SourceUnsuitableForReset,
+		SourceLocked,
+		LockFailed,
+		WoWOpen,
+		Unknown
+	}
+	
+	public class SyncException : Exception {
+		
+		public SyncException(SyncFailureReason reason) {
+			FailureReason = reason;
+		}
+		
+		public SyncFailureReason FailureReason { get; private set; }
+	}
+
     public class SyncContainer : INotifyPropertyChanged {
 
 		public event SyncBasicEventHandler SyncStarting;
@@ -32,7 +51,7 @@ namespace TACore {
         public void StartSync() {
 
             if (ResetFromTargetInstall && ResetFromSyncSource) {
-                FailWithException(new Exception(KNBundleGlobalHelpers.KNLocalizedString("can't reset from both sync sources error title", "")));
+				FailWithException(new SyncException(SyncFailureReason.InvalidResetConfiguration));
                 return;
             }
 
@@ -83,18 +102,18 @@ namespace TACore {
             // Check if target install is suitable for reset if needed
 
             if (ResetFromTargetInstall && !Target.CanBeUsedAsResetSource()) {
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("target install not suitable for reset error title", ""));
+				throw new SyncException(SyncFailureReason.TargetCannotBeReset);
             }
 
             // Lock source
 
             Source.UpdateLockStatus();
             if (Source.Locked) {
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("sync source already locked error title", ""));
+				throw new SyncException(SyncFailureReason.SourceLocked);
             }
 
             if (!Source.LockSource()) {
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("lock sync source failed error title", ""));
+				throw new SyncException(SyncFailureReason.LockFailed);
             }
 
             if (backgroundWorker.CancellationPending) {
@@ -174,7 +193,7 @@ namespace TACore {
 
             if (ResetFromSyncSource && !syncSourceInstall.CanBeUsedAsResetSource()) {
                 Source.UnlockSource();
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("sync source not suitable for reset error title", ""));
+				throw new SyncException(SyncFailureReason.SourceUnsuitableForReset);
             }
 
             // Create fresh sync source if we're resetting from target
@@ -216,7 +235,7 @@ namespace TACore {
 
             if (Platform.CurrentPlatform.WoWIsOpen) {
                 Source.UnlockSource();
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("wow open during sync error title", ""));
+				throw new SyncException(SyncFailureReason.WoWOpen);
             }
 
             // Perform a dry-run of source-target, and back up the target if it'll be changed
@@ -263,7 +282,7 @@ namespace TACore {
 
             if (log == null) {
                 Source.UnlockSource();
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("Unknown error",""));
+				throw new SyncException(SyncFailureReason.Unknown);
             }
 
             if (backgroundWorker.CancellationPending) {
@@ -281,7 +300,7 @@ namespace TACore {
 
             if (Platform.CurrentPlatform.WoWIsOpen) {
                 Source.UnlockSource();
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("wow open during sync error title", ""));
+				throw new SyncException(SyncFailureReason.WoWOpen);
             }
 
             // If source changed, pack it up and store again 
@@ -293,11 +312,11 @@ namespace TACore {
                 try {
                     newSyncId = Source.PackAndStoreSyncSourceInFileSystem(syncSourceInstall);
                     if (newSyncId == null) {
-                        throw new Exception("Unknown error");
+						throw new SyncException(SyncFailureReason.Unknown);
                     }
-                } catch (Exception) {
+                } catch (Exception ex) {
                     Source.UnlockSource();
-                    throw;
+                    throw ex;
                 }
 
                 cachedSyncLocation = Path.Combine(
@@ -323,7 +342,7 @@ namespace TACore {
 
             if (Platform.CurrentPlatform.WoWIsOpen) {
                 Source.UnlockSource();
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("wow open during sync error title", ""));
+				throw new SyncException(SyncFailureReason.WoWOpen);
             }
 
             // If the destination was changed, update the user's install with the sync result 
@@ -333,11 +352,11 @@ namespace TACore {
                 try {
                     WoWInstall newTarget = syncTargetInstall.InstallByDuplicatingInstallToDirectory(Target.DirectoryPath);
                     if (newTarget == null) {
-                        throw new Exception("Unknown error");
+						throw new SyncException(SyncFailureReason.Unknown);
                     }
-                } catch (Exception) {
+                } catch (Exception ex) {
                     Source.UnlockSource();
-                    throw;
+                    throw ex;
                 }
             }
 

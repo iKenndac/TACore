@@ -1,8 +1,6 @@
 
 - Getting values from KNPropertyListSerialization files or initWithPlist methods don't check if a key exists first
 
-- Exceptions are generic types with localised names. Change to specific exception types.
-
 - BackupController has an expiry time of 30 days
 
 - DropBox UploadFile calls aren't error checked (DropboxSyncSource)

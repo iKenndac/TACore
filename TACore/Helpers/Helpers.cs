@@ -106,9 +106,7 @@ namespace TACore {
             }
 
             if (foldersToZip.Count == 0) {
-                Exception ex = new Exception(KNBundleGlobalHelpers.KNLocalizedString("nothing to backup error title", ""));
-                ex.Data.Add(Constants.kExceptionErrorCodeKey, Constants.kNothingToBackupErrorCode);
-                throw ex;
+				throw new BackupException(BackupFailureReason.NothingToBackup);
             }
 
             ZipOutputStream s = new ZipOutputStream(File.Create(zipFilePath));

@@ -69,7 +69,7 @@ namespace TACore {
             string backupFilePath = PathForNewBackupWithDescriptionAtDate(backupDescription, now);
 
             if (File.Exists(backupFilePath)) {
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("backup file already exists error title", ""));
+				throw new BackupException(BackupFailureReason.BackupFileAlreadyExists);
             }
 
             Helpers.ArchiveInstallToZipFileAtDirectoryForBackup(install, backupFilePath);

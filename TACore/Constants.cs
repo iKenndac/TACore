@@ -26,7 +26,6 @@ namespace TACore {
         // Backups
 
         public const string kBackupsFolderName = "Backups";
-        public const uint kNothingToBackupErrorCode = 56; // Random for the sake of it
         public const string kBackupExpiryTimeUserDefaultsKey = "BackupExpiryTime";
 
         public const string kBackupPlistDescriptionKey = "backupDescription";

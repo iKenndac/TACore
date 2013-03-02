@@ -6,6 +6,23 @@ using System.IO;
 using KNFoundation;
 
 namespace TACore {
+
+	public enum BackupFailureReason : int {
+		BackupFileDoesntExist,
+		BackupFileAlreadyExists,
+		RestoreFailed,
+		NothingToBackup
+	}
+
+	public class BackupException : Exception {
+
+		public BackupException(BackupFailureReason reason) {
+			FailureReason = reason;
+		}
+	
+		public BackupFailureReason FailureReason { get; private set; }
+	}
+
     public class Backup {
 
         public Backup(string path, string aDescription, DateTime aDate) {
@@ -42,12 +59,12 @@ namespace TACore {
                 WoWInstall newTarget = sourceInstall.InstallByDuplicatingInstallToDirectory(install.DirectoryPath);
 
 				if (newTarget == null)
-					throw new Exception();
+					throw new BackupException(BackupFailureReason.RestoreFailed);
 
                 new DirectoryInfo(path).TryToDelete();
 
             } else {
-                throw new Exception(KNBundleGlobalHelpers.KNLocalizedString("backup doesn't exist error title", ""));
+				throw new BackupException(BackupFailureReason.BackupFileDoesntExist);
             }
 
         }
